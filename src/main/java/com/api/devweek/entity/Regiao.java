@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.api.devweek.entity;
 
 import javax.persistence.*;
 
@@ -10,11 +10,11 @@ public class Regiao {
     @Column(nullable = false, updatable = false)
     private Long id;
     private String regiao;
-    private Long qtd_exames;
+    private Long total_exames;
 
-    public Regiao(String regiao, Long qtd_exames) {
+    public Regiao(String regiao, Long total_exames) {
         this.regiao = regiao;
-        this.qtd_exames = qtd_exames;
+        this.total_exames = total_exames;
     }
 
     public Regiao() { }
@@ -31,11 +31,11 @@ public class Regiao {
         this.regiao = regiao;
     }
 
-    public Long getQtd_exames() {
-        return qtd_exames;
+    public Long getTotal_exames() {
+        return total_exames;
     }
 
-    public void setQtd_exames(Long qtd_exames) {
-        this.qtd_exames = qtd_exames;
+    public void setTotal_exames(Long total_exames) {
+        this.total_exames = total_exames;
     }
 }

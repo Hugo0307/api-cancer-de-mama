@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.api.devweek.entity;
 
 import javax.persistence.*;
 
@@ -10,13 +10,13 @@ public class FaixaEtaria {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    private Long faixaI;
-    private Long faixaN;
+    private Long faixa_i;
+    private Long faixa_n;
     private String descricao;
 
-    public FaixaEtaria(Long faixaI, Long faixaN, String descricao) {
-        this.faixaI = faixaI;
-        this.faixaN = faixaN;
+    public FaixaEtaria(Long faixa_i, Long faixa_n, String descricao) {
+        this.faixa_i = faixa_i;
+        this.faixa_n = faixa_n;
         this.descricao = descricao;
     }
 
@@ -26,20 +26,20 @@ public class FaixaEtaria {
         return id;
     }
 
-    public Long getFaixaI() {
-        return faixaI;
+    public Long getFaixa_i() {
+        return faixa_i;
     }
 
-    public void setFaixaI(Long faixaI) {
-        this.faixaI = faixaI;
+    public void setFaixa_i(Long faixa_i) {
+        this.faixa_i = faixa_i;
     }
 
-    public Long getFaixaN() {
-        return faixaN;
+    public Long getFaixa_n() {
+        return faixa_n;
     }
 
-    public void setFaixaN(Long faixaN) {
-        this.faixaN = faixaN;
+    public void setFaixa_n(Long faixaN) {
+        this.faixa_n = faixa_n;
     }
 
     public String getDescricao() {
