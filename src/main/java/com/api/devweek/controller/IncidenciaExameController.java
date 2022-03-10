@@ -4,16 +4,13 @@ import com.api.devweek.entity.IncidenciaExame;
 import com.api.devweek.repository.IncidenciaExamesRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/incidencia")
 public class IncidenciaExameController {
 
     private IncidenciaExamesRepository repository;
@@ -22,8 +19,8 @@ public class IncidenciaExameController {
         this.repository = repository;
     }
 
-    @GetMapping("/incidencia")
-    public ResponseEntity<?> findAllIncidenciaExame(){
+    @GetMapping
+    public ResponseEntity<?> findAllIncidencia(){
         try {
             List<IncidenciaExame> allIncidenciaExames = repository.findAll();
             if (!allIncidenciaExames.isEmpty())
@@ -34,8 +31,7 @@ public class IncidenciaExameController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @GetMapping("/incidencia/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<IncidenciaExame> findById(@PathVariable Long id) {
         Optional<IncidenciaExame> incidenciaExameById = repository.findById(id);
         if (incidenciaExameById.isPresent()){
@@ -43,5 +39,26 @@ public class IncidenciaExameController {
             return new ResponseEntity<>(incidenciaExameId, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/novo")
+    public ResponseEntity<IncidenciaExame> addIncidencia(@RequestBody IncidenciaExame incidencia) {
+        repository.save(incidencia);
+        return new ResponseEntity<>(incidencia, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IncidenciaExame> updateIncidencia(@RequestBody IncidenciaExame incidencia, @PathVariable Long id) {
+        Optional<IncidenciaExame> currentIncidencia = repository.findById(id);
+        if (currentIncidencia.isPresent()) {
+            repository.save(incidencia);
+            return new ResponseEntity<>(incidencia, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/remover/{id}")
+    public void deleteIncidencia(@PathVariable Long id) {
+        repository.deleteById(id);
     }
 }

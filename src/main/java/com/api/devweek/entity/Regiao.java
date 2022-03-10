@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Regiao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
     private String regiao;

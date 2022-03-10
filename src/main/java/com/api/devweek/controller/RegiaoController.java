@@ -4,16 +4,13 @@ import com.api.devweek.entity.Regiao;
 import com.api.devweek.repository.RegiaoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/regiao")
 public class RegiaoController {
 
     private RegiaoRepository repository;
@@ -22,7 +19,7 @@ public class RegiaoController {
         this.repository = repository;
     }
 
-    @GetMapping("/regioes")
+    @GetMapping
     public ResponseEntity<?> findAllRegioes(){
         try {
             List<Regiao> allRegioes = repository.findAll();
@@ -34,14 +31,33 @@ public class RegiaoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @GetMapping("/regiao/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Regiao> findById(@PathVariable Long id) {
         Optional<Regiao> regiaoById = repository.findById(id);
         if (regiaoById.isPresent()){
-            Regiao regiaoId = regiaoById.get();
+            Regiao regiaoId = (Regiao) regiaoById.get();
             return new ResponseEntity<>(regiaoId, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/novo")
+    public Regiao addRegiao(@RequestBody Regiao newRegiao) {
+        return repository.save(newRegiao);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Regiao> updateRegiao(@RequestBody Regiao regiao, @PathVariable Long id) {
+        Optional<Regiao> currentRegiao = repository.findById(id);
+        if (currentRegiao.isPresent()) {
+            repository.save(regiao);
+            return new ResponseEntity<>(regiao, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/remover/{id}")
+    public void deleteRegiao(@PathVariable Long id) {
+        repository.deleteById(id);
     }
 }
