@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/regiao")
+@RequestMapping("/api/regioes")
 public class RegiaoController {
 
     private RegiaoRepository repository;
