@@ -2,6 +2,8 @@ package com.api.devweek.controller;
 
 import com.api.devweek.entity.FaixaEtaria;
 import com.api.devweek.repository.FaixaEtariaRepository;
+import com.api.devweek.service.FaixaEtariaService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,23 +15,17 @@ import java.util.Optional;
 @RequestMapping("/api/faixaetaria")
 public class FaixaEtariaController {
 
-
-    private FaixaEtariaRepository repository;
-
-    public FaixaEtariaController(FaixaEtariaRepository repository) {
-        this.repository = repository;
+	private FaixaEtariaRepository repository;
+	
+    private FaixaEtariaService faixaEtariaService;
+    
+    public FaixaEtariaController(FaixaEtariaService faixaEtariaService) {
+    	this.faixaEtariaService = faixaEtariaService;
     }
 
     @GetMapping
     public ResponseEntity<?> findAllFaixaEtaria(){
-        try {
-            List<FaixaEtaria> allFaixasEtarias = repository.findAll();
-            if (!allFaixasEtarias.isEmpty())
-                return new ResponseEntity<>(allFaixasEtarias, HttpStatus.OK);
-        }catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    	return ResponseEntity.ok(faixaEtariaService.findAllFaixaEtaria());
     }
 
     @GetMapping("/{id}")
