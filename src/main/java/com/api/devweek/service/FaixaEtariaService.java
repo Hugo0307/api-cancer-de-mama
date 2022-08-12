@@ -5,8 +5,6 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.api.devweek.entity.FaixaEtaria;
 import com.api.devweek.repository.FaixaEtariaRepository;
@@ -36,10 +34,12 @@ public class FaixaEtariaService {
     }
     
     public ResponseEntity<?> addFaixaEtaria(FaixaEtaria newFaixaEtaria) {
-    	if(newFaixaEtaria.equals(null)) return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-    	
-        repository.save(newFaixaEtaria);
-        return new ResponseEntity<>(newFaixaEtaria, HttpStatus.CREATED);
+    	if(newFaixaEtaria.equals(null)) {
+    		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    	} else {
+    		repository.save(newFaixaEtaria);
+    		return new ResponseEntity<>(newFaixaEtaria, HttpStatus.CREATED);
+    	}
     }
     
     public ResponseEntity<?> updateFaixaEtaria(FaixaEtaria faixaEtaria, Long id) {
