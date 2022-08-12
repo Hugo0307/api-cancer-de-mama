@@ -1,9 +1,12 @@
 package com.api.devweek.service;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.api.devweek.entity.FaixaEtaria;
 import com.api.devweek.repository.FaixaEtariaRepository;
@@ -17,10 +20,44 @@ public class FaixaEtariaService {
         this.repository = repository;
     }
     
-    public List<FaixaEtaria> findAllFaixaEtaria(){
+    public ResponseEntity<?> findAllFaixaEtaria(){
     	return Optional.ofNullable(repository.findAll())
-    			.map(faixaEtarias -> faixaEtarias)
-    			.orElseThrow();
+    			.map(faixaEtaria -> ResponseEntity.ok(faixaEtaria))
+    			.orElse(ResponseEntity.notFound().build());
+    }
+    
+    public ResponseEntity<?> findFaixaEtariaById(Long id) {
+        Optional<FaixaEtaria> faixaEtariaById = repository.findById(id);
+        if (faixaEtariaById.isPresent()){
+            FaixaEtaria faixaEtariaId = faixaEtariaById.get();
+            return new ResponseEntity<>(faixaEtariaId, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    public ResponseEntity<?> addFaixaEtaria(FaixaEtaria newFaixaEtaria) {
+    	if(newFaixaEtaria.equals(null)) return new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    	
+        repository.save(newFaixaEtaria);
+        return new ResponseEntity<>(newFaixaEtaria, HttpStatus.CREATED);
+    }
+    
+    public ResponseEntity<?> updateFaixaEtaria(FaixaEtaria faixaEtaria, Long id) {
+        Optional<FaixaEtaria> currentFaixaEtaria = repository.findById(id);
+        if (currentFaixaEtaria.isPresent()) {
+            repository.save(faixaEtaria);
+            return new ResponseEntity<>(faixaEtaria, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    public ResponseEntity<?> deleteFaixaEtaria(Long id) {
+    	if(repository.existsById(id)){
+    		repository.deleteById(id);
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    	} else {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
     }
 
 }

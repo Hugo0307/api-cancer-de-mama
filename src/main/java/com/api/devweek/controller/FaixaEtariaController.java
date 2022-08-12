@@ -1,15 +1,21 @@
 package com.api.devweek.controller;
 
-import com.api.devweek.entity.FaixaEtaria;
-import com.api.devweek.repository.FaixaEtariaRepository;
-import com.api.devweek.service.FaixaEtariaService;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.api.devweek.entity.FaixaEtaria;
+import com.api.devweek.repository.FaixaEtariaRepository;
+import com.api.devweek.service.FaixaEtariaService;
 
 @RestController
 @RequestMapping("/api/faixaetaria")
@@ -25,37 +31,26 @@ public class FaixaEtariaController {
 
     @GetMapping
     public ResponseEntity<?> findAllFaixaEtaria(){
-    	return ResponseEntity.ok(faixaEtariaService.findAllFaixaEtaria());
+    	return faixaEtariaService.findAllFaixaEtaria();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FaixaEtaria> findById(@PathVariable Long id) {
-        Optional<FaixaEtaria> faixaEtariaById = repository.findById(id);
-        if (faixaEtariaById.isPresent()){
-            FaixaEtaria faixaEtariaId = faixaEtariaById.get();
-            return new ResponseEntity<>(faixaEtariaId, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> findFaixaEtariaById(@PathVariable Long id) {
+    	return faixaEtariaService.findFaixaEtariaById(id);
     }
 
     @PostMapping("/novo")
-    public ResponseEntity<FaixaEtaria> addFaixaEtaria(@RequestBody FaixaEtaria newFaixaEtaria) {
-        repository.save(newFaixaEtaria);
-        return new ResponseEntity<>(newFaixaEtaria, HttpStatus.CREATED);
+    public ResponseEntity<?> addFaixaEtaria(@RequestBody FaixaEtaria newFaixaEtaria) {
+        return faixaEtariaService.addFaixaEtaria(newFaixaEtaria);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FaixaEtaria> updateFaixaEtaria(@RequestBody FaixaEtaria faixaEtaria, @PathVariable Long id) {
-        Optional<FaixaEtaria> currentFaixaEtaria = repository.findById(id);
-        if (currentFaixaEtaria.isPresent()) {
-            repository.save(faixaEtaria);
-            return new ResponseEntity<>(faixaEtaria, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> updateFaixaEtaria(@RequestBody FaixaEtaria faixaEtaria, @PathVariable Long id) {
+        return faixaEtariaService.updateFaixaEtaria(faixaEtaria, id);
     }
 
     @DeleteMapping("/remover/{id}")
-    public void deleteFaixaEtaria(@PathVariable Long id) {
-        repository.deleteById(id);
+    public ResponseEntity<?> deleteFaixaEtaria(@PathVariable Long id) {
+        return faixaEtariaService.deleteFaixaEtaria(id);
     }
 }
