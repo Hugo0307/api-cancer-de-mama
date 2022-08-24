@@ -22,7 +22,6 @@ public class RegiaoController {
         this.regiaoService = regiaoService;
     }
     
-
     @GetMapping
     public ResponseEntity<List<Regiao>> findAllRegioes(){
     	return new ResponseEntity<>(regiaoService.findAllRegioes(), HttpStatus.OK); 
