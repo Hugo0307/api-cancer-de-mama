@@ -20,6 +20,13 @@ public class FaixaEtaria {
         this.descricao = descricao;
     }
 
+    public FaixaEtaria(Long id, Long faixa_i, Long faixa_n, String descricao) {
+        this.id = id;
+        this.faixa_i = faixa_i;
+        this.faixa_n = faixa_n;
+        this.descricao = descricao;
+    }
+
     public FaixaEtaria() { }
 
     public Long getId() {
