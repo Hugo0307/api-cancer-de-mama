@@ -22,6 +22,14 @@ public class IncidenciaExame {
         this.qnt_exames = qnt_exames;
     }
 
+    public IncidenciaExame(Long id, Integer regiao_id, Integer mes, Long faixa_id, Integer qnt_exames) {
+        this.id = id;
+        this.regiao_id = regiao_id;
+        this.mes = mes;
+        this.faixa_id = faixa_id;
+        this.qnt_exames = qnt_exames;
+    }
+
     public IncidenciaExame() { }
 
     public Long getId() {

@@ -1,12 +1,12 @@
 package com.api.devweek.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.api.devweek.entity.IncidenciaExame;
 import com.api.devweek.exception.ElementNotFoundException;
+import com.api.devweek.exception.ListNoContentException;
 import com.api.devweek.repository.IncidenciaExamesRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class IncidenciaExameService {
@@ -18,7 +18,14 @@ public class IncidenciaExameService {
 	}
 
 	public List<IncidenciaExame> findAllIncidencia() {
-		return repository.findAll();
+
+		var list = repository.findAll();
+
+		if (list.isEmpty()) {
+			throw new ListNoContentException();
+		}
+
+		return list;
 	}
 
 	public IncidenciaExame findIncidenciaById(Long id) {
